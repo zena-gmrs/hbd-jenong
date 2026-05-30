@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Birthday 3D</title>
+<title>Birthday Surprise</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -19,7 +19,7 @@ font-family:'Poppins',sans-serif;
 
 body{
 overflow:hidden;
-background:black;
+background:#0f1020;
 }
 
 canvas{
@@ -29,99 +29,300 @@ left:0;
 z-index:0;
 }
 
-.overlay{
+.intro{
+position:fixed;
+inset:0;
+z-index:9999;
+background:
+linear-gradient(
+135deg,
+#ff8dc7,
+#9f7bff,
+#6be7ff
+);
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+animation:introOut 1.5s ease forwards;
+animation-delay:6s;
+}
+
+.cloud{
+position:absolute;
+background:rgba(255,255,255,.25);
+filter:blur(10px);
+border-radius:999px;
+animation:cloudMove linear infinite;
+}
+
+.cloud1{
+width:260px;
+height:80px;
+top:90px;
+left:-300px;
+animation-duration:18s;
+}
+
+.cloud2{
+width:180px;
+height:60px;
+bottom:140px;
+right:-250px;
+animation-duration:22s;
+}
+
+@keyframes cloudMove{
+
+to{
+transform:translateX(1800px);
+}
+
+}
+
+.cake{
+position:absolute;
+bottom:-20px;
+width:260px;
+animation:cakeUp 2s ease forwards;
+}
+
+@keyframes cakeUp{
+
+from{
+transform:translateY(300px);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+.introContent{
+position:relative;
+z-index:5;
+text-align:center;
+padding:20px;
+}
+
+.introContent h1{
+font-size:95px;
+font-weight:800;
+color:white;
+line-height:1;
+opacity:0;
+transform:translateY(60px);
+animation:titleIn 1.5s ease forwards;
+animation-delay:.5s;
+text-shadow:
+0 10px 25px rgba(0,0,0,.15);
+}
+
+.introContent p{
+margin-top:20px;
+font-size:20px;
+color:white;
+letter-spacing:4px;
+opacity:0;
+animation:fadeIn 1.5s ease forwards;
+animation-delay:1.4s;
+}
+
+.tap{
+margin-top:40px;
+display:inline-flex;
+align-items:center;
+gap:12px;
+padding:15px 28px;
+border-radius:999px;
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(12px);
+color:white;
+font-size:14px;
+letter-spacing:3px;
+border:1px solid rgba(255,255,255,.25);
+opacity:0;
+animation:fadeIn 1.5s ease forwards;
+animation-delay:2.2s;
+}
+
+.tap span{
+width:10px;
+height:10px;
+border-radius:50%;
+background:white;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+
+50%{
+opacity:.3;
+}
+
+}
+
+@keyframes titleIn{
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes fadeIn{
+
+to{
+opacity:1;
+}
+
+}
+
+@keyframes introOut{
+
+to{
+opacity:0;
+visibility:hidden;
+}
+
+}
+
+.main{
 position:absolute;
 inset:0;
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:5;
-pointer-events:none;
+z-index:10;
+opacity:0;
+animation:showMain 2s ease forwards;
+animation-delay:6.2s;
+}
+
+@keyframes showMain{
+
+to{
+opacity:1;
+}
+
 }
 
 .card{
-width:900px;
-height:520px;
-backdrop-filter:blur(18px);
-background:rgba(255,255,255,0.08);
-border:1px solid rgba(255,255,255,0.12);
-border-radius:30px;
-box-shadow:
-0 0 50px rgba(255,0,255,0.2),
-0 0 120px rgba(0,255,255,0.12);
-padding:40px;
-display:flex;
-gap:30px;
-position:relative;
+width:1200px;
+height:670px;
+border-radius:40px;
 overflow:hidden;
-}
-
-.card::before{
-content:'';
-position:absolute;
-width:300px;
-height:300px;
-background:rgba(255,0,255,0.15);
-filter:blur(100px);
-top:-100px;
-right:-100px;
-border-radius:50%;
+position:relative;
+display:flex;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(25px);
+box-shadow:
+0 0 50px rgba(255,255,255,.05),
+0 0 120px rgba(255,105,180,.08);
 }
 
 .left{
-flex:1;
+width:45%;
+padding:70px;
 display:flex;
 flex-direction:column;
 justify-content:center;
-z-index:2;
+position:relative;
+z-index:5;
 }
 
-.left h1{
-font-size:58px;
-line-height:1.1;
-color:white;
+.small{
+font-size:14px;
+letter-spacing:5px;
+color:#ffb8dd;
 margin-bottom:20px;
-text-shadow:0 0 20px rgba(255,255,255,0.5);
 }
 
-.left span{
-background:linear-gradient(90deg,#ff00ff,#00ffff);
+.title{
+font-size:90px;
+line-height:.95;
+font-weight:800;
+color:white;
+}
+
+.title span{
+background:linear-gradient(
+90deg,
+#ff9fd0,
+#ffffff,
+#ffd86f
+);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.left p{
+.desc{
+margin-top:28px;
 font-size:18px;
-color:#ddd;
-line-height:1.7;
-max-width:400px;
+line-height:1.9;
+color:#f0f0ff;
+max-width:430px;
+}
+
+.bottom{
+margin-top:45px;
+display:flex;
+align-items:center;
+gap:14px;
+font-size:14px;
+letter-spacing:4px;
+color:#ffd7ea;
+}
+
+.dot{
+width:10px;
+height:10px;
+border-radius:50%;
+background:#ffd86f;
+box-shadow:0 0 12px #ffd86f;
 }
 
 .right{
-flex:1;
+width:55%;
 display:flex;
 justify-content:center;
 align-items:center;
-gap:20px;
-z-index:2;
+position:relative;
+perspective:2000px;
+}
+
+.ring{
+position:absolute;
+width:550px;
+height:550px;
+border-radius:50%;
+border:1px solid rgba(255,255,255,.08);
+animation:spin 18s linear infinite;
+}
+
+.ring::before{
+content:'';
+position:absolute;
+inset:35px;
+border-radius:50%;
+border:1px solid rgba(255,255,255,.04);
 }
 
 .photo{
-width:220px;
-height:340px;
-border-radius:25px;
+position:absolute;
+width:280px;
+height:400px;
+border-radius:35px;
 overflow:hidden;
-position:relative;
-transform-style:preserve-3d;
-animation:float 4s ease-in-out infinite;
 box-shadow:
-0 0 25px rgba(255,255,255,0.15),
-0 0 50px rgba(0,255,255,0.15);
-}
-
-.photo:nth-child(2){
-margin-top:60px;
-animation-delay:1s;
+0 25px 70px rgba(0,0,0,.45),
+0 0 40px rgba(255,255,255,.08);
+transition:1s;
 }
 
 .photo img{
@@ -141,73 +342,102 @@ position:absolute;
 inset:0;
 background:linear-gradient(
 to top,
-rgba(0,0,0,0.6),
-transparent 40%
+rgba(0,0,0,.7),
+transparent 45%
 );
+}
+
+.photo1{
+transform:
+translateX(-140px)
+rotateY(16deg)
+rotateZ(-4deg);
+animation:float1 6s ease-in-out infinite;
+}
+
+.photo2{
+transform:
+translateX(140px)
+rotateY(-16deg)
+rotateZ(4deg);
+animation:float2 6s ease-in-out infinite;
 }
 
 .label{
 position:absolute;
-bottom:18px;
-left:18px;
+bottom:20px;
+left:20px;
 color:white;
 font-size:15px;
 font-weight:600;
-z-index:5;
-}
-
-@keyframes float{
-
-0%,100%{
-transform:translateY(0px) rotate(-2deg);
-}
-
-50%{
-transform:translateY(-18px) rotate(2deg);
-}
-
-}
-
-.music{
-position:absolute;
-bottom:25px;
-left:40px;
-color:#aaa;
-font-size:14px;
+letter-spacing:2px;
 z-index:3;
 }
 
-.glow{
-position:absolute;
-width:600px;
-height:600px;
-background:radial-gradient(circle,
-rgba(0,255,255,0.12),
-transparent 70%);
-top:-200px;
-left:-200px;
-filter:blur(60px);
+@keyframes spin{
+
+from{
+transform:rotate(0deg);
 }
 
-@media(max-width:950px){
+to{
+transform:rotate(360deg);
+}
+
+}
+
+@keyframes float1{
+
+50%{
+transform:
+translateX(-140px)
+translateY(-20px)
+rotateY(13deg)
+rotateZ(-2deg);
+}
+
+}
+
+@keyframes float2{
+
+50%{
+transform:
+translateX(140px)
+translateY(-24px)
+rotateY(-13deg)
+rotateZ(2deg);
+}
+
+}
+
+@media(max-width:1100px){
 
 .card{
 width:95%;
 height:auto;
 flex-direction:column;
-padding:30px;
+}
+
+.left,
+.right{
+width:100%;
+}
+
+.left{
+padding:40px;
+}
+
+.title{
+font-size:60px;
 }
 
 .right{
-flex-direction:column;
+height:550px;
 }
 
-.left h1{
-font-size:42px;
-}
-
-.photo:nth-child(2){
-margin-top:0;
+.photo{
+width:220px;
+height:320px;
 }
 
 }
@@ -217,40 +447,84 @@ margin-top:0;
 
 <body>
 
-<div class="overlay">
+<div class="intro">
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<svg class="cake" viewBox="0 0 512 512" fill="none">
+<path d="M110 370H402V430H110V370Z" fill="#fff"/>
+<path d="M130 230H382V370H130V230Z" fill="#ffb6d9"/>
+<path d="M150 180H362V230H150V180Z" fill="#fff0f5"/>
+<rect x="185" y="120" width="20" height="60" rx="8" fill="#fff"/>
+<rect x="245" y="120" width="20" height="60" rx="8" fill="#fff"/>
+<rect x="305" y="120" width="20" height="60" rx="8" fill="#fff"/>
+<circle cx="195" cy="105" r="12" fill="#ffd86f"/>
+<circle cx="255" cy="105" r="12" fill="#ffd86f"/>
+<circle cx="315" cy="105" r="12" fill="#ffd86f"/>
+</svg>
+
+<div class="introContent">
+
+<h1>
+HAPPY<br>BIRTHDAY 🎂
+</h1>
+
+<p>THIS PAGE IS MADE FOR YOU ✦</p>
+
+<div class="tap">
+<span></span>
+LOADING SWEET MEMORIES
+</div>
+
+</div>
+
+</div>
+
+<div class="main">
 
 <div class="card">
 
-<div class="glow"></div>
-
 <div class="left">
 
-<h1>
-Happy Birthday
-<span>Bestie 🎂</span>
-</h1>
+<div class="small">
+SPECIAL MOMENT
+</div>
 
-<p>
-Semoga panjang umur, makin cantik/ganteng,
-dan hidupnya gak se-random coding JavaScript jam 2 pagi 😭
-</p>
+<div class="title">
+BEST<br>
+<span>MEMORIES</span>
+</div>
 
-<div class="music">
-🎵 put your favorite song here
+<div class="desc">
+Selamat ulang tahun 🎉  
+Semoga hidup lu makin banyak bahagianya,
+makin dikit drama randomnya,
+dan semoga semua hal baik dateng terus ke hidup lu 😭
+</div>
+
+<div class="bottom">
+
+<div class="dot"></div>
+
+FOREVER MEMORY
+
 </div>
 
 </div>
 
 <div class="right">
 
-<div class="photo">
-<img src="d1.jpeg">
-<div class="label">Memory 01</div>
+<div class="ring"></div>
+
+<div class="photo photo1">
+<img src="d1.jpg">
+<div class="label">orang cantik </div>
 </div>
 
-<div class="photo">
-<img src="d2.jpeg">
-<div class="label">Memory 02</div>
+<div class="photo photo2">
+<img src="d2.jpg">
+<div class="label">orang cantik </div>
 </div>
 
 </div>
@@ -261,7 +535,7 @@ dan hidupnya gak se-random coding JavaScript jam 2 pagi 😭
 
 <script type="module">
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 const scene = new THREE.Scene();
 
@@ -272,9 +546,10 @@ window.innerWidth/window.innerHeight,
 1000
 );
 
-camera.position.z = 30;
+camera.position.z = 35;
 
 const renderer = new THREE.WebGLRenderer({
+alpha:true,
 antialias:true
 });
 
@@ -287,66 +562,78 @@ renderer.setPixelRatio(window.devicePixelRatio);
 
 document.body.appendChild(renderer.domElement);
 
-const particlesGeometry = new THREE.BufferGeometry();
+const geometry =
+new THREE.BufferGeometry();
 
-const count = 7000;
+const count = 18000;
 
-const positions = new Float32Array(count * 3);
+const positions =
+new Float32Array(count*3);
 
 for(let i=0;i<count*3;i++){
 
-positions[i] = (Math.random()-0.5)*200;
+positions[i] =
+(Math.random()-0.5)*500;
 
 }
 
-particlesGeometry.setAttribute(
+geometry.setAttribute(
 'position',
 new THREE.BufferAttribute(positions,3)
 );
 
-const particlesMaterial = new THREE.PointsMaterial({
+const material =
+new THREE.PointsMaterial({
 size:0.15,
-color:'#ffffff'
+color:"#ffffff"
 });
 
-const particlesMesh = new THREE.Points(
-particlesGeometry,
-particlesMaterial
+const particles =
+new THREE.Points(
+geometry,
+material
 );
 
-scene.add(particlesMesh);
+scene.add(particles);
 
-const torus = new THREE.Mesh(
+const torus =
+new THREE.Mesh(
 
-new THREE.TorusGeometry(10,0.3,16,100),
+new THREE.TorusKnotGeometry(
+12,
+0.35,
+300,
+32
+),
 
 new THREE.MeshStandardMaterial({
-color:'#00ffff',
-emissive:'#00ffff',
-emissiveIntensity:1
+color:"#ff9fd0",
+wireframe:true
 })
 
 );
 
 scene.add(torus);
 
-const torus2 = new THREE.Mesh(
+const crystal =
+new THREE.Mesh(
 
-new THREE.TorusGeometry(14,0.15,16,100),
+new THREE.IcosahedronGeometry(
+9,
+1
+),
 
 new THREE.MeshStandardMaterial({
-color:'#ff00ff',
-emissive:'#ff00ff',
-emissiveIntensity:1
+color:"#ffd86f",
+wireframe:true
 })
 
 );
 
-torus2.rotation.x = 1.5;
+scene.add(crystal);
 
-scene.add(torus2);
-
-const light = new THREE.PointLight(
+const light =
+new THREE.PointLight(
 0xffffff,
 2
 );
@@ -355,9 +642,10 @@ light.position.set(20,20,20);
 
 scene.add(light);
 
-const ambient = new THREE.AmbientLight(
+const ambient =
+new THREE.AmbientLight(
 0xffffff,
-0.6
+0.5
 );
 
 scene.add(ambient);
@@ -366,13 +654,13 @@ function animate(){
 
 requestAnimationFrame(animate);
 
-particlesMesh.rotation.y += 0.0007;
+particles.rotation.y += 0.0003;
 
-torus.rotation.x += 0.005;
-torus.rotation.y += 0.008;
+torus.rotation.x += 0.002;
+torus.rotation.y += 0.003;
 
-torus2.rotation.y -= 0.005;
-torus2.rotation.z += 0.003;
+crystal.rotation.y -= 0.002;
+crystal.rotation.z += 0.001;
 
 renderer.render(scene,camera);
 
